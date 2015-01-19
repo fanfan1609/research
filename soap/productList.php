@@ -2,6 +2,7 @@
 require_once("nusoap/lib/nusoap.php");
 
 function getProd($category){
+	// file_put_contents("log.txt", "Category is put :" . $category . "\n");
 	if($category == 'books'){
 		return join(",",array(
 			"The WordPress Anthology",

@@ -1,7 +1,13 @@
 <?php
-$sql = "INSERT INTO aisha_msg (aisha_alert_id,msg_title,msg_content) VALUES ";
-foreach( range(1,30) as $i){
-    $sql .= sprintf("(%s,'Title %s', 'Content %s'),", 3,$i,$i);
-}
+// open the file in a binary mode
+$name = '24.3.jpg';
+$fp = fopen($name, 'rb');
 
-echo $sql;
+// send the right headers
+header("Content-Type: image/png");
+header("Content-Length: " . filesize($name));
+
+// dump the picture and stop the script
+readfile($name);
+exit;
+?>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="urn:productList" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:productList">
+<types>
+<xsd:schema targetNamespace="urn:productList">
+ <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+ <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+ <xsd:complexType name="bookInfo">
+  <xsd:all>
+   <xsd:element name="title" type="xsd:string"/>
+   <xsd:element name="author" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+</xsd:schema>
+</types>
+<message name="getProdRequest">
+  <part name="category" type="xsd:string"/></message>
+<message name="getProdResponse">
+  <part name="return" type="tns:bookInfo"/></message>
+<message name="getTestRequest"/>
+<message name="getTestResponse">
+  <part name="return" type="xsd:string"/></message>
+<portType name="productListPortType">
+  <operation name="getProd">
+    <documentation>Get a listing of products by category</documentation>
+    <input message="tns:getProdRequest"/>
+    <output message="tns:getProdResponse"/>
+  </operation>
+  <operation name="getTest">
+    <documentation>Get a listing of products by category</documentation>
+    <input message="tns:getTestRequest"/>
+    <output message="tns:getTestResponse"/>
+  </operation>
+</portType>
+<binding name="productListBinding" type="tns:productListPortType">
+  <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <operation name="getProd">
+    <soap:operation soapAction="urn:productList#getProd" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:productList" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:productList" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="getTest">
+    <soap:operation soapAction="urn:productList#getTest" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:productList" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:productList" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+</binding>
+<service name="productList">
+  <port name="productListPort" binding="tns:productListBinding">
+    <soap:address location="http://c2b.local.com/test.php"/>
+  </port>
+</service>
+</definitions>
