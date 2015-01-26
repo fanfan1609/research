@@ -1,0 +1,40 @@
+
+footer {
+	background-color: #828282;
+	width: 100%;
+}
+
+footer .left {
+	line-height: 38px;
+	margin-left: 20px
+}
+footer ul {
+	margin: 0;
+	padding : 0;
+}
+
+footer ul li {
+	display: inline-block;
+	margin: 10px
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+	/*margin-right: 20%;*/
+}
+
+.clear:after {
+	content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+.clear {
+	display: inline-block;
+}
