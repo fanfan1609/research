@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<script src="https://code.jquery.com/jquery-1.11.2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript">
+    $(function(){
+        var Song = Backbone.Model.extend({
+    defaults: {
+        name: "Not specified",
+        artist: "Not specified"
+    },
+    initialize: function(){
+        
+    }
+});
+
+var Album = Backbone.Collection.extend({
+    model: Song
+});
+
+var song1 = new Song({ name: "TeXt Menu 1", artist: "OMC" });
+var song2 = new Song({ name: "Alibaba", artist: "Marvin Gaye" });
+var song3 = new Song({ name: "Happy New Year", artist: "Abba" });
+
+var myAlbum = new Album([ song1, song2, song3]);
+console.log( myAlbum.models );
+
+var SongView  = Backbone.View.extend({
+    
+    el: '.nav-sidebar',
+    
+    template: _.template('<h1><%= name %></h2>'),
+    
+    initialize: function() {
+        this.collection = new Album([ song1, song2, song3]);
+          
+    },
+    render: function(eventName) {
+        console.log(this.model.models);
+        _.each(this.model.models, function(profile){
+            var profileTemplate = this.template(profile.toJSON());
+            $(this.el).append(profileTemplate);
+        }, this);
+        
+        return this;
+    }
+});
+
+var xxx = new SongView({model: myAlbum});
+
+
+xxx.render();
+    });
+    	
+    </script>
+</head>
+<body>
+	
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Menu Example with Backbone</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="#">Dashboard</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
