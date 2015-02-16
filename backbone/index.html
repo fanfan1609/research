@@ -14,15 +14,117 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript">
+    	var CA = CA || {};
+        CA.Collection = CA.Collection || {};
+        
+        (function(){
+            
+            CA.QuestionType = Backbone.Model.extend({
+                defaults: {
+                    id  : null,
+                    name: null,
+                    desc: null,
+                    cls: 'CA.SurveyEditor.default'
+                }
+            });
+            
+            CA.Collection.QuestionType = Backbone.Collection.extend({
+                model: CA.QuestionType,
+
+                initialize: function(){
+                    this.set([
+                        {
+                            id  : 1,
+                            name: 'AAA',
+                            desc: '123',
+                            cls: 'CA.SurveyEditor.default'
+                        },
+                        {
+                            id  : 2,
+                            name: 'BBB',
+                            desc: '546',
+                            cls: 'CA.SurveyEditor.default'
+                        }
+                    ])
+                }
+            });
+
+            CA.SurveyEditor = Backbone.View.extend({
+                initialize: function(){
+                    var questionType = new CA.Collection.QuestionType();
+                    console.info(questionType);
+
+                    var menu = new CA.SurveyEditorMenu({
+                    	el : this.$('#menu'),
+                    	collection : questionType
+                    });
+
+                    menu.on('question.add',function(m){
+                    	home.trigger('question.add',m);
+
+                    	this.launchEditor({
+                    		id : m.attributes.id,
+                    		cls : m.attributes.cls
+                    	});
+                    },this);
+
+                    var home = new CA.SurveyEditorHome({
+                    	el: this.$('#home')
+                    });
+                }
+            });
+
+            CA.SurveyEditorMenu = Backbone.View.extend({
+            	template: _.template([
+            		"<div><%= name %></div>",
+            	].join("")),
+
+            	initialize: function(config){
+            		config = config || {};
+            		console.info(config.collection);
+            		
+            		config.collection.each(function(m){            			
+            			var el = $(this.template(m.attributes)).appendTo(this.$el);
+            			el.on('click', $.bind(function(){
+            				this.trigger('question:add',m)
+            			},this));
+            		},this);
+
+            		this.render();
+            	},
+            	render : function(){
+
+            	}
+            });
+
+            CA.SurveyEditorHome = Backbone.View.extend({
+            	initialize: function(){
+
+            	}
+            });
+            
+        })();
+
+        $(document).ready(function () {
+            new CA.SurveyEditor({
+                el: '#x-survey-editor'
+            });
+        });
+    </script>
 </head>
 <body>
 	
-	
-
-
-	
-	<script>
-	
-	</script>
+	<div id="#x-survey-editor" class="container">
+		<div class='row'>
+			<div class='col-md-3' style='background-color: cornsilk' >
+				<div id="menu">Menu</div>
+			</div>
+			<div class='cold-md-9' style="background-color: burlywood">
+				<div>MAIn</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

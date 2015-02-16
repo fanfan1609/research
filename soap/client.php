@@ -17,7 +17,7 @@ class Client {
 		// $submitNotifyRequestMessage->endDate = time();
 		$submitNotifyRequestMessage = (object)array(
 			'storeID' 				=> 'kuruma_yahoo_jp_id',
-			'businessCommodityID' 	=> '1',
+			'businessCommodityID' 	=> '43',
 			'auctionID' 			=> '123',
 			'startDate' 			=> time(),
 			'endDate' 				=> time(),
@@ -41,7 +41,7 @@ class Client {
 	public function bidNotify()
 	{
 		$bidNotifyRequestMessage = (object) array(
-			'storeID' 		=> 'kuruma_yahoo_jp_id',
+			'storeID' 		=> 'vn_test',
 			'auctionID' 	=> '123',
 			'bidderArray' 	=> array(
 				(object) array('bidder' => '47852121a'),
@@ -56,15 +56,15 @@ class Client {
 	{
 		$soldNotifyRequestMessage = (object) array(
 			'storeID' 			=> 'kuruma_yahoo_jp_id',
-			'auctionID' 		=> '',
-			'winnerInfoArray' 	=> array(
-				'winner' 	=> '',
+			'auctionID' 		=> '123',
+			'winnerInfoArray' 	=> (object) array(
+				'winner' 	=> '47852121a',
 				'email'  	=> '',
-				'price'	 	=> '',
+				'price'	 	=> '2121217',
 				'quantity'	=> '',
 			),
 			'quantityTotal'		=> '',
-			'businessCommodityID' => '1'
+			'businessCommodityID' => '43'
 		);
 		return $this->_client->soldNotify($soldNotifyRequestMessage);
 	}	
@@ -73,9 +73,9 @@ class Client {
 	{
 		$closeNotifyRequestMessage = (object) array(
 			'storeID' 		=> 'kuruma_yahoo_jp_id',
-			'auctionID' 	=> '',
+			'auctionID' 	=> '123',
 		);
-		return $this->_client->soldNotify($closeNotifyRequestMessage);
+		return $this->_client->closeNotify($closeNotifyRequestMessage);
 	}
 
 	public function orderNotify()
