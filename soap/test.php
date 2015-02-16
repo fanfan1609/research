@@ -10,8 +10,8 @@
 // print_r($client->getObject(array('a'=>1,'b'=>2)));
 
 $options= array(
-	'location' =>	'http://c2b.local.com/soapServer/service',
-	'uri'	=>	'http://c2b.local.com/soapServer/service'
+	'location' =>	'http://c2b.local.com:8090/soapServer/service',
+	'uri'	=>	'http://c2b.local.com:8090/soapServer/service'
 );
 // $client=new SoapClient(NULL,$options);
 // // echo $client->test(); //Hello,World!
@@ -19,5 +19,9 @@ $options= array(
 include_once 'client.php';
 $client = new Client(null,$options);
 
-$response = $client->bidNotify();
+// $response = $client->bidNotify(); DONE
+// $response = $client->submitNotify(); DONE
+// $response = $client->questionNotify(); DONE
+// $response = $client->soldNotify(); DONE
+$response = $client->closeNotify();
 var_dump($response);
