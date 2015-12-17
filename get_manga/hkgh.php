@@ -5,7 +5,7 @@ define('DS', DIRECTORY_SEPARATOR);
 
 $name = 'hkgh';
 $mainPath = MANGA_FOLDER . DS . $name;
-makeDir($name);
+makeDir($mainPath);
 
 $dom = file_get_html('http://mangak.net/hiep-khach-giang-ho/');
 
@@ -17,7 +17,6 @@ foreach($dom->find('div.chapter-list div.row span a') as $a){
     if( preg_match("/chap-[0-9]+/", $url,$matches) ){
         $subFolder = $matches[0];
         writeLog( "GET $subFolder");
-        writeLog("$subFolder is ". checkFailChap($mainPath.DS.$subFolder) ? 'fail' : 'success');
         if( checkFailChap($mainPath.DS.$subFolder) ){
             writeLog("$subFolder is new or fail");
             getContentInChap($a->href, $mainPath.DS.$subFolder);
@@ -51,12 +50,13 @@ function makeDir($folder)
 
 function checkFailChap($folder)
 {
+    if( !is_dir($folder) ) return true;
     return count(scandir($folder)) < 5;
 }
 
 function writeLog($message)
 {
-    $log = @fopen('logs.txt','a') or die('Unable to open file');
+    $log = @fopen('hgkh_logs.txt','a') or die('Unable to open file');
     fwrite($log,"\n".$message);
     fclose($log);
 }
