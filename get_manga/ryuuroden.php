@@ -21,7 +21,7 @@ foreach($dom->find('div.chapter-list div.row span a') as $a){
         if( checkFailChap($mainPath.DS.$subFolder) ){
             writeLog("$subFolder is new or fail");
             getContentInChap($a->href, $mainPath.DS.$subFolder);
-            sleep(20);
+            sleep(5);
         }
         writeLog("DONE $subFolder");
 	}
@@ -35,10 +35,8 @@ function getContentInChap($url,$folder)
 	makeDir($folder);
 	$dom = file_get_html($url);
 	foreach($dom->find('div.vung_doc img') as $i => $img){
-        if( strpos($img->src, 'imgmax') ){
-            $content = file_get_contents($img->src);
-            file_put_contents($folder ."/". $i . '.' . pathinfo($img->src,PATHINFO_EXTENSION), $content );
-        }
+        $content = file_get_contents($img->src);
+        file_put_contents($folder ."/". $i . '.' . pathinfo($img->src,PATHINFO_EXTENSION), $content );
 	}
 }
 

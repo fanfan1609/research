@@ -20,7 +20,7 @@ foreach($dom->find('div.chapter-list div.row span a') as $a){
         if( checkFailChap($mainPath.DS.$subFolder) ){
             writeLog("$subFolder is new or fail");
             getContentInChap($a->href, $mainPath.DS.$subFolder);
-            sleep(20);
+            // sleep(10);
         }
         writeLog("DONE $subFolder");
     }
